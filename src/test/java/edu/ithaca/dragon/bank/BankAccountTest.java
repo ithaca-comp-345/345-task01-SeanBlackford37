@@ -10,7 +10,19 @@ class BankAccountTest {
     void getBalanceTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
-        assertEquals(200, bankAccount.getBalance());
+        assertEquals(200, bankAccount.getBalance()); //Correct Balance displays 
+        
+        
+        BankAccount bankAccountOne = new BankAccount("a@b.com", -1); //Balance is negative (should set it to zero)
+        assertEquals(0, bankAccountOne.getBalance());
+
+       
+        BankAccount bankAccountTwo = new BankAccount("a@b.com", 10.50);  //Balance with a Double
+        assertEquals(10.50, bankAccountTwo.getBalance());
+
+       
+        BankAccount bankAccountThree = new BankAccount("a@b.com", 10.213);  //Balance with a Double with not valid amount
+        assertEquals(10.21, bankAccountThree.getBalance());
     }
 
     @Test
@@ -18,8 +30,28 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
 
-        assertEquals(100, bankAccount.getBalance());
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
+        assertEquals(100, bankAccount.getBalance()); //Valid Amount withdrawn
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300)); //Over drawing
+         
+        
+        bankAccount.withdraw(-50);
+        assertEquals(100, bankAccount.getBalance()); //Withdraw a negative amount
+        bankAccount.withdraw(0);
+        assertEquals(100, bankAccount.getBalance()); //Withdraw nothing
+
+        
+        bankAccount.withdraw(.0005);
+        assertEquals(100, bankAccount.getBalance()); //Invalid Amount to widthdraw
+
+        
+        bankAccount.withdraw(0.10);
+        assertEquals(99.90, bankAccount.getBalance()); //Withdraw an amount less than $1
+
+        
+        bankAccount.withdraw(0.555);
+        assertEquals(99.35, bankAccount.getBalance()); //Withdraw a Double with too many places
+
+
     }
 
     @Test
