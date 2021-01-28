@@ -24,8 +24,20 @@ class BankAccountTest {
 
     @Test
     void isEmailValidTest(){
-        assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        assertFalse( BankAccount.isEmailValid(""));
+        assertTrue(BankAccount.isEmailValid( "a@b.com")); //valid email
+        assertFalse( BankAccount.isEmailValid("")); //Checks if  empty
+        assertFalse( BankAccount.isEmailValid("abc-@mail.com")); //Checks symbol before @
+        assertFalse( BankAccount.isEmailValid("abc..def@mail.com")); //Symbol followed by symbol 
+        assertFalse( BankAccount.isEmailValid(".abc@mail.com")); //Starting off with a symbol 
+        assertFalse( BankAccount.isEmailValid("#abc@mail.com")); //Starting off with a symbol 
+        assertFalse( BankAccount.isEmailValid("abc#def@mail.com")); //Having an illegal symbol in the middle 
+        assertFalse( BankAccount.isEmailValid("@.com")); //Invalid
+        assertFalse( BankAccount.isEmailValid("abc.def@mail.c")); //Invalid
+        assertFalse( BankAccount.isEmailValid("abc.def@mail#archive.com")); //Invalid can't have hastag at all
+        assertFalse( BankAccount.isEmailValid("abc.def@mail")); //No .com 
+        assertFalse( BankAccount.isEmailValid("abc.def@mail..com")); //too many periods at the end
+
+        
     }
 
     @Test
@@ -37,5 +49,7 @@ class BankAccountTest {
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
     }
+
+    
 
 }
