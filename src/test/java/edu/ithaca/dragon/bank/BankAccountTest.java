@@ -25,16 +25,25 @@ class BankAccountTest {
     @Test
     void isEmailValidTest(){
         assertTrue(BankAccount.isEmailValid( "a@b.com")); //valid email
-        assertFalse( BankAccount.isEmailValid("")); //Checks if  empty
-        assertFalse( BankAccount.isEmailValid("abc-@mail.com")); //Checks symbol before @
+        assertFalse( BankAccount.isEmailValid("")); //Checks if  empty 
+        //Placement of symbol class
+        assertFalse( BankAccount.isEmailValid("abc-@mail.com")); //Checks symbol before @       
+        //Repition of symbol class
         assertFalse( BankAccount.isEmailValid("abc..def@mail.com")); //Symbol followed by symbol 
+        //Placement of symbol back edge case
         assertFalse( BankAccount.isEmailValid(".abc@mail.com")); //Starting off with a symbol 
         assertFalse( BankAccount.isEmailValid("#abc@mail.com")); //Starting off with a symbol 
+        //Symbol not valid class
         assertFalse( BankAccount.isEmailValid("abc#def@mail.com")); //Having an illegal symbol in the middle 
+        //Placement of symbol front edge case
         assertFalse( BankAccount.isEmailValid("@.com")); //Invalid
+        //Ending email invalid class
         assertFalse( BankAccount.isEmailValid("abc.def@mail.c")); //Invalid
+        //Symbol not valid  class
         assertFalse( BankAccount.isEmailValid("abc.def@mail#archive.com")); //Invalid can't have hastag at all
+        //Ending email invalid class
         assertFalse( BankAccount.isEmailValid("abc.def@mail")); //No .com 
+        //Repition of symbol class
         assertFalse( BankAccount.isEmailValid("abc.def@mail..com")); //too many periods at the end
 
         
