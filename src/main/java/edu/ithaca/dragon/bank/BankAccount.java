@@ -18,6 +18,11 @@ public class BankAccount {
         }
     }
     public static boolean isAmountValid(double balance){
+        String s = "" + balance;
+        String[] result = s.split("\\.");
+        if(balance >=0 && result[1].length() <= 2){
+          return true;
+        }
        return false;
     }
     public double getBalance(){
