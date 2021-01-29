@@ -20,6 +20,16 @@ public class BankAccount {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
         }
     }
+
+    public void deposit (double amount){
+        //Nothing
+
+    }
+
+    public static void transfer (BankAccount account,double amount, BankAccount accountTransferTo){
+        //Nothing
+        
+    }
     public static boolean isAmountValid(double balance){
         String s = "" + balance;
         String[] result = s.split("\\.");

@@ -112,6 +112,47 @@ class BankAccountTest {
 
     }
 
+    @Test
+    void depositTest() {
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        //border case
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.deposit(-200)); //Trying to deposit a negative amount
+        //equivalence class
+        bankAccount.deposit(0);
+        assertEquals(200, bankAccount.getBalance()); //deposit nothing
+        //border case
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.deposit(200.9999)); //Deposit with too many decimals
+        //equivalence class
+        bankAccount.deposit(100.50);
+        assertEquals(300.50, bankAccount.getBalance()); //deposit double
+        //equivalence class
+        bankAccount.deposit(100);
+        assertEquals(400.50, bankAccount.getBalance()); //deposit int
+    }
+    @Test
+    void transferTest() {
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccountTwo = new BankAccount("seanb@gmai.com", 20);
+        //Base case
+        BankAccount.transfer(bankAccount, 150, bankAccountTwo); 
+        //equivalence class
+        assertEquals(170, bankAccountTwo.getBalance()); //Tranfer int amount to second account
+        assertEquals(50, bankAccount.getBalance()); //Remaining balance of first account
+        //equivalence class
+        assertThrows(InsufficientFundsException.class, () -> BankAccount.transfer(bankAccount, 150, bankAccountTwo)); //Not enough money to transfer
+        //border case
+        assertThrows(InsufficientFundsException.class, () -> BankAccount.transfer(bankAccount, 150.5555, bankAccountTwo)); //too many decimals
+        //border case
+        assertThrows(InsufficientFundsException.class, () -> BankAccount.transfer(bankAccount, -150, bankAccountTwo)); //Can't transfer negative amount
+        //equivalence class
+        BankAccount.transfer(bankAccount, 25.01, bankAccountTwo);
+        assertEquals(195.01, bankAccountTwo.getBalance()); //Tranfer double amount to second account
+        //equivalence class
+        BankAccount.transfer(bankAccountTwo, 100, bankAccount); //Tranfer money back into the second account 
+        assertEquals(95.01, bankAccountTwo.getBalance()); //Check remaining balance
+        assertEquals(150, bankAccount.getBalance()); //Check remaining balance
+    }
+
     
 
 }
