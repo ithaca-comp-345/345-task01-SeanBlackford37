@@ -32,7 +32,8 @@ class BankAccountTest {
 
         assertEquals(100, bankAccount.getBalance()); //Valid Amount withdrawn
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300)); //Over drawing
-         
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(-300));
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300.33333)); 
         
         bankAccount.withdraw(-50);
         assertEquals(100, bankAccount.getBalance()); //Withdraw a negative amount
@@ -104,6 +105,10 @@ class BankAccountTest {
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -100));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -100.3333));
+
     }
 
     
