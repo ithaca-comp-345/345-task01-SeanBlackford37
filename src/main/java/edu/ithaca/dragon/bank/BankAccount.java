@@ -17,7 +17,9 @@ public class BankAccount {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
         }
     }
-
+    public static boolean isAmountValid(double balance){
+       return false;
+    }
     public double getBalance(){
         if (balance < 0){
             balance = 0;

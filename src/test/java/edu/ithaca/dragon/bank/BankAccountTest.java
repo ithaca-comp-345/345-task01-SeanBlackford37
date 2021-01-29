@@ -80,7 +80,22 @@ class BankAccountTest {
 
         
     }
-
+    @Test
+    void isAmountValidTest(){
+        //Equivalence class
+        assertTrue(BankAccount.isAmountValid(1000)); //Base case 
+        //Equivalence class
+        assertTrue(BankAccount.isAmountValid(1000.50)); //Doubles
+        //Equivalence class
+        assertFalse(BankAccount.isAmountValid(1000.3333)); //Not valid too many decimals
+        //Equivalence class
+        assertFalse(BankAccount.isAmountValid(-1000)); //Not valid negative number
+        //Equivalence class
+        assertFalse(BankAccount.isAmountValid(0.33333)); //Not valid too many decimal places
+        //Equivalence class
+        assertTrue(BankAccount.isAmountValid(0)); //Bank account has nothing in it
+        //No border cases
+    }
     @Test
     void constructorTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
