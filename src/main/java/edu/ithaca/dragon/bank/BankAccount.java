@@ -22,12 +22,22 @@ public class BankAccount {
     }
 
     public void deposit (double amount){
-        //Nothing
+        if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot deposit");
+        }
+        balance += amount;
 
     }
 
-    public static void transfer (BankAccount account,double amount, BankAccount accountTransferTo){
-        //Nothing
+    public void transfer (double amount, BankAccount accountTransferTo) throws InsufficientFundsException{
+        if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot deposit");
+        }
+        if(amount > balance){
+            throw new InsufficientFundsException("Not enough money to transfer");
+        }
+        accountTransferTo.balance += amount;
+        balance -= amount;
         
     }
     public static boolean isAmountValid(double balance){
