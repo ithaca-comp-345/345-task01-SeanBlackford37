@@ -20,7 +20,9 @@ public class BankAccount {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
         }
     }
-
+     /**
+     * @Post adds the balance by amount for the current account, throws an error if the amount is invalid.
+     */
     public void deposit (double amount){
         if(!isAmountValid(amount)){
             throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot deposit");
@@ -28,21 +30,26 @@ public class BankAccount {
         balance += amount;
 
     }
-
+     /**
+     * @Post reduces the balance by amount for the current account, takes in the second account.
+     */
     public void transfer (double amount, BankAccount accountTransferTo) throws InsufficientFundsException{
         if(!isAmountValid(amount)){
             throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot deposit");
         }
-        if(amount > balance){
+        else if(amount > balance){
             throw new InsufficientFundsException("Not enough money to transfer");
         }
         accountTransferTo.balance += amount;
         balance -= amount;
         
     }
+     /**
+     * @Post return true or false by checking if the amount is valid
+     */
     public static boolean isAmountValid(double balance){
         String s = "" + balance;
-        String[] result = s.split("\\.");
+        String[] result = s.split("\\."); //Splits on the decimal and puts each side into result[1] (left half) and result[2] (right half)
         if(balance >=0 && result[1].length() <= 2){
           return true;
         }
@@ -81,7 +88,9 @@ public class BankAccount {
         
     }
 
-
+     /**
+     * @Post return true or false by checking if the email is valid
+     */
     public static boolean isEmailValid(String email){
         if ((email.indexOf('@') == -1) || (email.indexOf('@') == 0)){
             return false;

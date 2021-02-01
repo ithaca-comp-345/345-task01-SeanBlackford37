@@ -12,17 +12,13 @@ class BankAccountTest {
 
         assertEquals(200, bankAccount.getBalance()); //Correct Balance displays 
         
-        
-         //Balance is negative (should set it to zero)
+        //Balance is negative (should set it to zero)
         assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -1));
         
-
-       
         BankAccount bankAccountTwo = new BankAccount("a@b.com", 10.50);  //Balance with a Double
         assertEquals(10.50, bankAccountTwo.getBalance());
 
-       
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", 10.213));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", 10.213)); //Too many decimals 
     }
 
     @Test
@@ -33,19 +29,15 @@ class BankAccountTest {
         assertEquals(100, bankAccount.getBalance()); //Valid Amount withdrawn
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300)); //Over drawing
         
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-300));
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(300.33333)); 
-        assertThrows(IllegalArgumentException.class, () ->  bankAccount.withdraw(-50)); 
-       
-        assertEquals(100, bankAccount.getBalance()); //Withdraw a negative amount
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-300)); //Withdraw a negative amount
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(300.33333));  //too many decimals
+        
+        assertEquals(100, bankAccount.getBalance()); 
         bankAccount.withdraw(0);
         assertEquals(100, bankAccount.getBalance()); //Withdraw nothing
 
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(.0005));
-        
         assertEquals(100, bankAccount.getBalance()); //Invalid Amount to widthdraw
 
-        
         bankAccount.withdraw(0.10);
         assertEquals(99.90, bankAccount.getBalance()); //Withdraw an amount less than $1
 
@@ -85,7 +77,7 @@ class BankAccountTest {
     @Test
     void isAmountValidTest(){
         //Equivalence class
-        assertTrue(BankAccount.isAmountValid(1000)); //Base case 
+        assertTrue(BankAccount.isAmountValid(1000)); //Base case Int
         //Equivalence class
         assertTrue(BankAccount.isAmountValid(1000.50)); //Doubles
         //Equivalence class
@@ -105,10 +97,10 @@ class BankAccountTest {
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100)); //Invalid email
 
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -100));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -100.3333));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -100)); //Invalid amount
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -100.3333)); //Invalid amount with too many decimals 
 
     }
 
@@ -150,7 +142,7 @@ class BankAccountTest {
         assertEquals(195.50, bankAccountTwo.getBalance()); //Tranfer double amount to second account
         //equivalence class
         
-        bankAccountTwo.transfer(100, bankAccount);
+        bankAccountTwo.transfer(100, bankAccount); //Int
         assertEquals(95.50, bankAccountTwo.getBalance()); //Check remaining balance
         assertEquals(124.50, bankAccount.getBalance()); //Check remaining balance
     }
